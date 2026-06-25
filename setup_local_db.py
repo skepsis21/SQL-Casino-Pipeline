@@ -1,0 +1,80 @@
+import os
+import sqlite3
+import pandas as pd
+
+# Get the directory where this script is located (now the root)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Point directly into the 'Data' folder
+db_path = os.path.join(script_dir, "Data", "casino.db")
+player_csv = os.path.join(script_dir, "Data", "player_activity.csv")
+game_revenue_csv = os.path.join(script_dir, "Data", "game_revenue.csv")
+# vip_alerts_csv is defined here if you need to use it later
+vip_alerts_csv = os.path.join(script_dir, "Data", "vip_alerts.csv")
+
+print("🚢 Initializing Cruise Casino SQLite Database Setup...\n")
+
+# 1. Connect to SQLite
+conn = sqlite3.connect(db_path)
+cursor = conn.cursor()
+
+# 2. Create the tables
+print("🛠️ Creating tables inside casino.db...")
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS player_activity (
+    player_id INTEGER PRIMARY KEY,
+    player_name TEXT,
+    total_wagered REAL
+);
+""")
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS game_revenue (
+    game_id INTEGER PRIMARY KEY,
+    game_name TEXT,
+    game_type TEXT,
+    daily_revenue REAL
+);
+""")
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS vip_alerts (
+    alert_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    player_id INTEGER,
+    game_id INTEGER,
+    large_wager REAL,
+    alert_status TEXT,
+    alert_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+""")
+conn.commit()
+
+# 3. Load CSV data into the database
+print("📂 Importing CSV datasets into tables...")
+
+if os.path.exists(player_csv):
+    cursor.execute("DELETE FROM player_activity")
+    df_players = pd.read_csv(player_csv)
+    df_players.to_sql("player_activity", conn, if_exists="append", index=False)
+    print(f"    ✅ Imported {len(df_players)} players to 'player_activity'")
+
+if os.path.exists(game_revenue_csv):
+    cursor.execute("DELETE FROM game_revenue")
+    df_games = pd.read_csv(game_revenue_csv)
+    df_games.to_sql("game_revenue", conn, if_exists="append", index=False)
+    print(f"    ✅ Imported {len(df_games)} games to 'game_revenue'")
+
+# 4. Populate active security alerts
+cursor.execute("DELETE FROM vip_alerts")
+cursor.execute("""
+INSERT INTO vip_alerts (player_id, game_id, large_wager, alert_status)
+VALUES 
+(1001, 501, 168123.00, 'Host Assigned'),
+(1002, 503, 214050.00, 'Host Assigned'),
+(1010, 502, 231500.00, 'Investigating')
+""")
+conn.commit()
+print("    ✅ Populated active security alerts to 'vip_alerts'\n")
+
+conn.close()
+print("🎉 Database initialized successfully!")
