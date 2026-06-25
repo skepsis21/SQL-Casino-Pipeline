@@ -39,6 +39,8 @@ This project is built for reproducibility—all data ingestion, schema creation,
 
     setup_local_db.py: Master script to build the local SQLite environment.
 
+![System Architecture](https://raw.githubusercontent.com/skepsis21/SQL-Casino-Pipeline/main/docs/Casino-DB-Pipeline.png)
+
 🛠️ Solutions Implemented
 1. On-Demand Player Profiling
 
@@ -76,4 +78,4 @@ FROM vip_alerts v
 INNER JOIN player_activity p 
     ON v.player_id = p.player_id;
 
-One final reminder: Ensure that you have actually moved your images into the docs/ folder in your project directory, and that you have committed and pushed those files to GitHub using the Source Control tab in VS Code. Without pushing those specific image files to the server, the links will remain broken on the live page.
+![Player Tier Distribution](https://raw.githubusercontent.com/skepsis21/SQL-Casino-Pipeline/main/docs/tier_distribution_chart.png)
