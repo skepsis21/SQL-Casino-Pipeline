@@ -1,35 +1,39 @@
-Casino-DB-Pipeline
+# Casino-DB-Pipeline
 
 An automated SQLite backend data pipeline for player loyalty segmentation, live high-roller alerts, and scheduled database optimization on a cruise line gaming floor.
-📌 Business Scenario
+
+## Business Scenario
 
 Managing data operations on a modern cruise ship casino requires efficient, automated background processing to conserve satellite bandwidth and keep live dashboards running quickly. This project establishes an automated relational database pipeline that manages high-roller tracking, processes tiered player loyalty logic on demand, and schedules database self-maintenance routines.
 
 This project is built for reproducibility—all data ingestion, schema creation, and reporting are automated through Python-based pipelines, eliminating manual setup.
-🚀 Getting Started
 
-    Clone the repository.
+## Getting Started
 
-    Setup Environment: Create a virtual environment and install dependencies:
-    Bash
+1. **Clone the repository.**
 
-    python -m venv .venv
-    .venv\Scripts\activate  # On Windows
-    pip install -r requirements.txt
+2. **Setup Environment**: Create a virtual environment and install dependencies:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 
     Initialize Database: Run the automation script to ingest CSV data into SQLite:
-    Bash
 
-    python setup_local_db.py
+Bash
+
+python setup_local_db.py
 
     Generate Analytics: Run the reporting scripts to generate dashboard files and visual charts:
-    Bash
 
-    python Scripts/generate_charts.py
-    python Scripts/generate_manager_report.py
+Bash
 
-🗺️ System Architecture
-🛠️ Project Contents
+python Scripts/generate_charts.py
+python Scripts/generate_manager_report.py
+
+System Architecture
+Project Contents
 
     Data/: Contains raw CSV source files for ingestion.
 
@@ -39,14 +43,14 @@ This project is built for reproducibility—all data ingestion, schema creation,
 
     setup_local_db.py: Master script to build the local SQLite environment.
 
-![System Architecture](https://raw.githubusercontent.com/skepsis21/SQL-Casino-Pipeline/main/docs/Casino-DB-Pipeline.png)
-
-🛠️ Solutions Implemented
+Solutions Implemented
 1. On-Demand Player Profiling
 
     Objective: Allows VIP casino hosts to instantly pull a breakdown of customer tiers.
 
     Logic: Uses custom segmentation logic to categorize players into Diamond VIP, Platinum, and Gold groups based on lifetime wagered metrics.
+
+![System Architecture](docs/Casino-DB-Pipeline.png)
 
 2. High-Roller Intercept Guard
 
@@ -60,7 +64,9 @@ This project is built for reproducibility—all data ingestion, schema creation,
 
     Logic: Implements a scheduled maintenance job to systematically prune inactive/zero-revenue data.
 
-📊 Business Intelligence & Core Analytics
+Business Intelligence & Core Analytics
+
+![Player Tier Distribution](docs/tier_distribution_chart.png)
 
 The database implements advanced multi-table relational analysis to extract actionable insights.
 High-Roller Security Dispatch Protocol
@@ -77,5 +83,3 @@ SELECT
 FROM vip_alerts v
 INNER JOIN player_activity p 
     ON v.player_id = p.player_id;
-
-![Player Tier Distribution](https://raw.githubusercontent.com/skepsis21/SQL-Casino-Pipeline/main/docs/tier_distribution_chart.png)
