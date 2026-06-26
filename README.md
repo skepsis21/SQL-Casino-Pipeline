@@ -50,7 +50,7 @@ Solutions Implemented
 
     Logic: Uses custom segmentation logic to categorize players into Diamond VIP, Platinum, and Gold groups based on lifetime wagered metrics.
 
-![System Architecture](docs/Casino-DB-Pipeline.png)
+![System Architecture](/docs/Casino-DB-Pipeline.png)
 
 2. High-Roller Intercept Guard
 
@@ -66,7 +66,7 @@ Solutions Implemented
 
 Business Intelligence & Core Analytics
 
-![Player Tier Distribution](docs/tier_distribution_chart.png)
+![Player Tier Distribution](/docs/tier_distribution_chart.png)
 
 The database implements advanced multi-table relational analysis to extract actionable insights.
 High-Roller Security Dispatch Protocol
